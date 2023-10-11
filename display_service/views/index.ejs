@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Grades</title>
+</head>
+<body>
+  <h1>Student Grades</h1>
+  <ul>
+    <% students.forEach(function(student) { %>
+      <li>
+        Maximum Grade: <%= student.maximum_grade %><br>
+        Minimum Grade: <%= student.minimum_grade %><br>
+        Average Grade: <%= student.average_grade %><br>
+      </li>
+    <% }); %>
+  </ul>
+
+</body>
+</html>

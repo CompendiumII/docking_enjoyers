@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: analytics_data
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: password1
+    ports:
+      - "3306:3306"
+    networks:
+      - microservices
+
+  display_Service:
+    image: display_service
+    ports:
+      - "5006:5006"
+    networks:
+      - microservices
+      
+  login_service:
+    image: login_service
+    ports:
+      - "5001:5001"
+    networks:
+      - microservices
+
+  mongo_service:
+    image: mongo
+    container_name: mongo_container
+    ports:
+      - "5004:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
+    networks:
+      - microservices
+
+  auth_service:
+    image: auth_service
+    ports:
+      - "5000:5000"
+    networks:
+      - microservices
+
+  analytics_service:
+    image: analytics_service
+    ports:
+      - "8080:80"
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=user1
+      - MYSQL_PASSWORD=password1
+    networks:
+      - microservices
+
+networks:
+  microservices:
+    driver: bridge
